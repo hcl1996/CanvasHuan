@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no,email=no,address=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>环形进度条</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+  </style>
+</head>
+<canvas id="progress" width='600' height="400" style="border:1px solid #000;display:block;margin:0 auto"></canvas>
+
+<body>
+  <script>
+    //环形进度条
+    var progress = document.getElementById("progress"),
+      ctx = progress.getContext('2d'),
+      deg = Math.PI / 180;
+    ctx.translate(300, 200)
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = "#ccc"
+    ctx.arc(0, 0, 150, 0, 360 * deg);
+    ctx.stroke()
+
+
+    //进度圆环（小）计时器
+
+    requestAnimationFrame(draw);
+    var step = 0;
+
+    function draw() {
+      step += 3;
+      ctx.beginPath();
+
+      ctx.strokeStyle = "red";
+
+      ctx.arc(0, 0, 150, -90 * deg, (step - 90) * deg);
+      ctx.stroke()
+      ctx.clearRect(-50, -25, 100, 50)
+      ctx.fillText(parseInt(step / 360 * 100) + "%", 0, 0)
+      if (step < 360) {
+        requestAnimationFrame(draw);
+      }
+
+    }
+
+  </script>
+</body>
+
+</html>
